@@ -29,7 +29,7 @@ export const authOptions={
                 });
                 if (result.length > 0) {
                     // return result[0];
-                    
+                    console.log(result);
                     return result[0];
                 } else {
                     console.log('login failed')
@@ -46,13 +46,17 @@ export const authOptions={
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
+                token.id = user.id;
                 token.role = user.role;
+
             }
             return token;
         },
         async session({ session, token }) {
             if (token) {
+                session.user.id=token.id;
                 session.user.role = token.role;
+            
             }
             return session;
         },
@@ -60,25 +64,6 @@ export const authOptions={
     
 }
 
-// export async function POST(req) {
-//     try {
-//         const { email, password } = await req.json();
-//         const result = await query({
-//             query: "SELECT * FROM users WHERE email = ? AND password = ?",
-//             values: [email, password],
-//         });
-
-//         if (result.length > 0) {
-//             return NextResponse.json({ message: "Login successful", user: result[0] }, { status: 200 });
-//         } else {
-//             return new NextResponse("Invalid email or password", { status: 401 });
-//         }
-//     } catch (error) {
-//         console.error("Error during login:", error);
-//         return new NextResponse("An error occurred during login", { status: 500 });
-//     }
-
-// }
 
 const handler=NextAuth(authOptions);
 export {handler as GET,handler as POST}

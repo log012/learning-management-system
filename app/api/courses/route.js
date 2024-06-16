@@ -5,7 +5,7 @@ import { query } from '@/app/db/db';
 export async function GET(req){
      try{
         const course = await query({
-            query: `SELECT c.id, c.title, c.image,c.description, a.name AS instructor, cat.name AS category
+            query: `SELECT c.id, c.title, c.image,c.description,c.price, a.name AS instructor, cat.name AS category
       FROM courses c
       JOIN author a ON c.author_id = a.id
       JOIN categories cat ON c.category_id = cat.id`,

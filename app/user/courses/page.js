@@ -1,9 +1,13 @@
 // components/CourseList.js
 'use client'
+import { checkout } from "@/app/checkout";
 import CategoryFilter from "@/app/components/CategoryFilter";
 import Navbar from "@/app/components/Navbar";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const courses = [
   { id: 1, title: "Introduction to Programming", description: "Learn the basics of programming.", image: "/images/course1.jpg" },
@@ -28,7 +32,8 @@ const CourseList = () => {
   const [selectedCategory, setSelectedCategory] = useState('0');
   const [categories, setCategories] = useState([]);
   const [courses, setCourses] = useState([]);
-  console.log(selectedCategory)
+  const router=useRouter();
+  console.log(courses)
    useEffect(()=>{
        const getCategories=async()=>{
            const categories=await fetchCategories();
@@ -55,6 +60,23 @@ const CourseList = () => {
     }
     getCourses();
    },[selectedCategory]);
+  const sessions=useSession();
+  console.log(sessions);
+   const CheckoutButton=async(id,title,price)=>{
+    try {
+      if(sessions.data){
+        const res=await axios.post("/api/payment",{title,price})
+        console.log(res.data);
+        const resData=res.data;
+        window.location.href=resData.url;
+      }else{
+          router.push('/user/login')
+      }
+      
+    } catch (error) {
+      console.log(error)
+    }
+   }
   return (
 
     <>
@@ -69,9 +91,12 @@ const CourseList = () => {
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2">{course.title}</h3>
               <p className="text-gray-700">{course.description}</p>
-              <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
+              <button onClick={()=>CheckoutButton(course.id,course.title,course.price)} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300 block w-[100%]">
                 Enroll Now
               </button>
+              <button href="" className="mt-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-300 w-[100%]">
+              Course Overview
+            </button>
             </div>
           </div>
         ))}
