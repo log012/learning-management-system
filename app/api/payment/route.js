@@ -1,26 +1,30 @@
 import { NextResponse } from 'next/server';
 import { query } from '@/app/db/db';
-
+import { getServerSession } from 'next-auth';
 import Stripe from 'stripe';
 import { url } from 'inspector';
+import { authOptions } from '../auth/[...nextauth]/route';
+
 const stripe=new Stripe(process.env.SECRET_KEY);
 
 
 export async function POST(request) {
+    const session=await getServerSession(authOptions);
+    console.log(session);
     try {
         
-   
+     
 
      const data = await request.json();
      console.log(data);
      
      const customer=await stripe.customers.create({
-        email:"customer@example.com",
-        name:"Vipul",
+        email:session.user.email,
+        name:session.user.name,
         address:{
             line1:"123 Main St",
             postal_code:"12345",
-            city:"Anytown",
+            city:"valsad",
             state:"CA",
             country:"US"
         }
@@ -46,6 +50,8 @@ export async function POST(request) {
             }
         ]
     });
+
+
     
      // Example: Process the data (e.g., save to the database)
      // await query('INSERT INTO products (name, price) VALUES (?, ?)', [data.name, data.price]);

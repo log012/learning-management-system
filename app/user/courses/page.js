@@ -67,8 +67,19 @@ const CourseList = () => {
       if(sessions.data){
         const res=await axios.post("/api/payment",{title,price})
         console.log(res.data);
-        const resData=res.data;
-        window.location.href=resData.url;
+        if(res){
+          const user_id=sessions.data.user.id;
+          console.log(user_id);
+          const course_id=id;
+          console.log(course_id);
+          const enrolledCourse=await axios.post('/api/courses/enrolled-course',{user_id,course_id});
+          if(enrolledCourse){
+            const resData=res.data;
+            window.location.href=resData.url;
+          }
+          
+        }
+        
       }else{
           router.push('/user/login')
       }

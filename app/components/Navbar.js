@@ -74,8 +74,8 @@ const DropdownMenu = () => {
       </button>
       {dropdownOpen && (
         <div className="absolute right-0 mt-2 w-28 bg-white rounded-md shadow-lg py-1 z-20 ">
-         <FontAwesomeIcon icon="fa-solid fa-user" /> <a href="/user/profile" className="block mx-4 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700">Profile</a>
-          <a href="#" className="block mx-4 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700">Settings</a>
+         <FontAwesomeIcon icon="fa-solid fa-user" /> <a href="/user/profile" className="block mx-4 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 hover:rounded hover:w-28 hover:m-0 ">Profile</a>
+          <a href="#" className="block mx-4 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 hover:rounded hover:w-28 hover:m-0">Settings</a>
           <LogoutButton />
         </div>
       )}

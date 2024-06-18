@@ -11,7 +11,7 @@ const Profile = () => {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {/* Recent Courses */}
       <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Recent Courses</h2>
+        <h2 className="text-xl font-semibold mb-4">Enrolled Courses</h2>
         <ul className="space-y-2">
           <li className="bg-gray-100 p-3 rounded-md">
             <p className="font-medium">Course 1</p>
